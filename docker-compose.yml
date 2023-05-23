@@ -1,0 +1,39 @@
+version: '3'
+services:
+    web:
+        image: iso_inventarios:latest
+
+        container_name: inventarios
+
+        build: .
+
+        ports:
+            - '8000:80'
+
+        volumes:
+            - './:/var/www/html'
+
+        environment:
+            MYSQL_HOST: mysql
+            MYSQL_USER: root
+            MYSQL_PASSWORD: 123456y
+            MYSQL_DB: pruebita
+
+    mysql:
+        image: mysql:5.7
+        volumes:
+          - todo-mysql-data:/var/lib/mysql
+        environment: 
+            MYSQL_ROOT_PASSWORD: 123456y
+            MYSQL_DATABASE: pruebita
+
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+          - 8080:80
+        environment:
+          - PMA_ARBITRARY=1
+
+volumes:
+    todo-mysql-data:
